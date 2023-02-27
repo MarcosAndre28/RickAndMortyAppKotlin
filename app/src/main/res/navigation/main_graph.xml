@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/splashFragment">
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.rickandmortyappkotlin.ui.SplashFragment"
+        android:label="fragment_spash"
+        tools:layout="@layout/fragment_spash" >
+        <action
+            android:id="@+id/action_splashFragment_to_navigation"
+            app:destination="@id/navigation"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <navigation android:id="@+id/navigation"
+        app:startDestination="@id/registerFragment">
+        <fragment
+            android:id="@+id/registerFragment"
+            android:name="com.example.rickandmortyappkotlin.ui.auth.RegisterFragment"
+            android:label="fragment_register"
+            tools:layout="@layout/fragment_register" >
+            <action
+                android:id="@+id/action_registerFragment_to_loginFragment"
+                app:destination="@id/loginFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/loginFragment"
+            android:name="com.example.rickandmortyappkotlin.ui.auth.LoginFragment"
+            android:label="fragment_login"
+            tools:layout="@layout/fragment_login" >
+            <action
+                android:id="@+id/action_loginFragment_to_registerFragment"
+                app:destination="@id/registerFragment" />
+        </fragment>
+        <action
+            android:id="@+id/action_global_homeFragment"
+            app:destination="@id/navigation_home" />
+    </navigation>
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.rickandmortyappkotlin.ui.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_location"
+            app:destination="@id/navigation_location" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_episodes"
+            app:destination="@id/navigation_episodes" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_location"
+        android:name="com.example.rickandmortyappkotlin.ui.locationFragment"
+        android:label="fragment_location"
+        tools:layout="@layout/fragment_location" />
+    <fragment
+        android:id="@+id/navigation_episodes"
+        android:name="com.example.rickandmortyappkotlin.ui.EpisodesFragment"
+        android:label="fragment_episodes"
+        tools:layout="@layout/fragment_episodes" />
+</navigation>

@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">RickAndMortyAppKotlin</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="logo">Logo</string>
+    <string name="logo_name">Logo nome</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Senha</string>
+    <string name="register">Registrar</string>
+    <string name="account_login">Ja tem uma conta ?</string>
+    <string name="confirm_password">Confirme a senha</string>
+    <string name="or_sign">Ou registre-se com</string>
+    <string name="or_login">Ou entre com</string>
+    <string name="sign">Registre-se</string>
+    <string name="welcome">Bem vindo</string>
+    <string name="create_account">Ainda não tem conta?</string>
+    <string name="create_account_info">Registre-se</string>
+    <string name="welcome_again">Bem vindo novamente</string>
+    <string name="recovery_password">Esqueceu a senha?</string>
+    <string name="episodes">Episódios</string>
+    <string name="location">Localização</string>
+    <string name="characters">Personagens</string>
+</resources>
