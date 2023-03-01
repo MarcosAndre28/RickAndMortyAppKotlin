@@ -16,7 +16,7 @@
             app:popUpToInclusive="true"/>
     </fragment>
     <navigation android:id="@+id/navigation"
-        app:startDestination="@id/registerFragment">
+        app:startDestination="@id/loginFragment">
         <fragment
             android:id="@+id/registerFragment"
             android:name="com.example.rickandmortyappkotlin.ui.auth.RegisterFragment"
@@ -53,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_location"
-        android:name="com.example.rickandmortyappkotlin.ui.locationFragment"
+        android:name="com.example.rickandmortyappkotlin.ui.LocationFragment"
         android:label="fragment_location"
         tools:layout="@layout/fragment_location" />
     <fragment

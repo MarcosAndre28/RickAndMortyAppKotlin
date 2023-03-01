@@ -21,4 +21,9 @@
     <string name="episodes">Episódios</string>
     <string name="location">Localização</string>
     <string name="characters">Personagens</string>
+    <string name="main">Personagens principais</string>
+    <string name="title_rv">Rick Sanchez</string>
+    <string name="race">Raça</string>
+    <string name="status">Vivo</string>
+    <string name="next_ep">Proximo Episódio</string>
 </resources>

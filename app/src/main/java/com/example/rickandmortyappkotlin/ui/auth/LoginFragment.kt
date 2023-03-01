@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.rickandmortyappkotlin.R
 import com.example.rickandmortyappkotlin.databinding.FragmentLoginBinding
 import com.example.rickandmortyappkotlin.databinding.FragmentSpashBinding
@@ -47,6 +49,14 @@ class LoginFragment : Fragment() {
         val textShader: Shader = LinearGradient(0f, 0f, width, tvLoginLogo.textSize, intArrayOf(
             Color.parseColor("#27ECB8"), Color.parseColor("#2CDC72"), Color.parseColor("#93E22F")), null, Shader.TileMode.CLAMP)
         paint.shader = textShader
+
+        binding.tvStatus.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
+
+        binding.btnLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_global_homeFragment)
+        }
     }
 
     override fun onDestroyView() {

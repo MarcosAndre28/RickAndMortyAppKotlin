@@ -26,7 +26,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+      initListeners()
+    }
 
+    private fun initListeners(){
+        (activity as MainActivity).binding.bottomNavigation.visibility = View.VISIBLE
     }
     override fun onDestroyView() {
         super.onDestroyView()
