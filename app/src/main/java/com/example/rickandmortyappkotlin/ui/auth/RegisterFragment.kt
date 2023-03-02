@@ -9,28 +9,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.rickandmortyappkotlin.R
-import com.example.rickandmortyappkotlin.database.model.RegisterUser
-import com.example.rickandmortyappkotlin.database.viewModel.RegisterUserViewModel
+import com.example.rickandmortyappkotlin.data.auth.RegisterViewModel
 import com.example.rickandmortyappkotlin.databinding.FragmentRegisterBinding
-import com.example.rickandmortyappkotlin.databinding.FragmentSpashBinding
 import com.example.rickandmortyappkotlin.ui.MainActivity
-import com.example.rickandmortyappkotlin.utils.Status
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
-import timber.log.Timber
+import com.example.rickandmortyappkotlin.utils.RegisterState
 
 class RegisterFragment : Fragment() {
 
     private var _binding : FragmentRegisterBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var registerViewModel : RegisterUserViewModel
+    private lateinit var registerViewModel: RegisterViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +39,7 @@ class RegisterFragment : Fragment() {
 
         initListener()
         initXmlView()
-        register()
+        registerUser()
     }
 
     private fun initXmlView(){
@@ -67,33 +61,56 @@ class RegisterFragment : Fragment() {
 
     }
 
-    private fun register(){
-        registerViewModel = ViewModelProvider(this)[RegisterUserViewModel::class.java]
+    private fun registerUser() {
+
+        registerViewModel = ViewModelProvider(this).get(RegisterViewModel::class.java)
 
         binding.btnRegister.setOnClickListener {
+            val email = binding.editEmail.text.toString().trim()
+            val username = binding.editUsername.text.toString().trim()
+            val password = binding.editPassword.text.toString().trim()
 
-            val email = binding.editEmail.text.toString()
-            val password = binding.editPassword.text.toString()
+            if (email.isEmpty()) {
+                binding.editEmail.error = "O email é obrigatório."
+                binding.editEmail.requestFocus()
+                return@setOnClickListener
+            }
 
-            val user = RegisterUser(0,email,password)
-            lifecycleScope.launch {
-                registerViewModel.insert(user).onEach { status ->
-                    when(status){
-                        is Status.Loading -> {
+            if (username.isEmpty()) {
+                binding.editUsername.error = "O nome de usuário é obrigatório."
+                binding.editUsername.requestFocus()
+                return@setOnClickListener
+            }
 
-                        }
-                        is Status.Success -> {
-                            findNavController().navigate(R.id.action_global_homeFragment)
-                        }
-                        is Status.Error -> {
-                        }
+            if (password.isEmpty()) {
+                binding.editPassword.error = "A senha é obrigatória."
+                binding.editPassword.requestFocus()
+                return@setOnClickListener
+            }
+
+            registerViewModel.register(email, username, password)
+
+            registerViewModel.registerState.observe(requireActivity()) { state ->
+                when (state) {
+                    is RegisterState.Loading -> {
+                      binding.progressBar.visibility = View.VISIBLE
                     }
-                }.launchIn(lifecycleScope)
+                    is RegisterState.Success -> {
+                        findNavController().navigate(R.id.action_global_homeFragment)
+                    }
+                    is RegisterState.Error -> {
+                        // Registro falhou, exibir uma mensagem de erro
+                        val message = state.message ?: "Ocorreu um erro durante o registro"
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
 
         }
 
+
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -9,7 +9,7 @@
     <string name="password">Senha</string>
     <string name="register">Registrar</string>
     <string name="account_login">Ja tem uma conta ?</string>
-    <string name="confirm_password">Confirme a senha</string>
+    <string name="user_name">Nome de usuário</string>
     <string name="or_sign">Ou registre-se com</string>
     <string name="or_login">Ou entre com</string>
     <string name="sign">Registre-se</string>
@@ -26,4 +26,7 @@
     <string name="race">Raça</string>
     <string name="status">Vivo</string>
     <string name="next_ep">Proximo Episódio</string>
+    <string name="recover_password">Clique aqui</string>
+    <string name="info_recover">Redefinir senha</string>
+    <string name="info_user">Digite seu endereço de e-mail para redefinir sua senha:</string>
 </resources>

@@ -153,58 +153,23 @@
             android:id="@+id/tvRecoverPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Clique aqui"
+            android:text="@string/recover_password"
             android:textAlignment="textEnd"
             android:textColor="@color/splash_color"
             android:textStyle="bold" />
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView6"
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/or_login"
-        android:textColor="@color/black"
-        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnGoogle"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:background="@drawable/bg_button_social"
-            app:backgroundTint="@null"
-            app:icon="@drawable/google"
-            app:iconGravity="textStart"
-            app:iconPadding="8dp"
-            app:iconTint="@color/black" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnFecebook"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/bg_button_social"
-            app:backgroundTint="@null"
-            app:icon="@drawable/facebook"
-            app:iconGravity="textStart"
-            app:iconPadding="8dp"
-            app:iconTint="@color/black" />
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

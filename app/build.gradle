@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -81,6 +82,9 @@ dependencies {
     // Timber logging
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-    // Kotlin flow
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-rc01'
+    // FireBase
+    implementation platform('com.google.firebase:firebase-bom:31.2.2')
+    implementation 'com.google.firebase:firebase-auth:21.1.0'
+
+
 }
