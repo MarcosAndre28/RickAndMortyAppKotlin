@@ -14,6 +14,11 @@
             app:destination="@id/navigation"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_splashFragment_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <navigation android:id="@+id/navigation"
         app:startDestination="@id/loginFragment">
@@ -50,6 +55,12 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_episodes"
             app:destination="@id/navigation_episodes" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation"
+            app:destination="@id/navigation" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation2"
+            app:destination="@id/navigation" />
     </fragment>
     <fragment
         android:id="@+id/navigation_location"

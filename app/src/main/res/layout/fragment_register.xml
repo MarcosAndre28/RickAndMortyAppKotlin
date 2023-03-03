@@ -78,7 +78,6 @@
             android:background="@null"
             android:ems="10"
             android:hint="@string/user_name"
-            android:inputType="textPassword"
             android:padding="@dimen/_8sdp"
             android:textSize="18sp" />
     </androidx.cardview.widget.CardView>

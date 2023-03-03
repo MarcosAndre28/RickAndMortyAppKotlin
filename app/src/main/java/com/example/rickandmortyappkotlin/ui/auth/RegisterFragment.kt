@@ -1,5 +1,6 @@
 package com.example.rickandmortyappkotlin.ui.auth
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Shader
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -63,7 +65,7 @@ class RegisterFragment : Fragment() {
 
     private fun registerUser() {
 
-        registerViewModel = ViewModelProvider(this).get(RegisterViewModel::class.java)
+        registerViewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
 
         binding.btnRegister.setOnClickListener {
             val email = binding.editEmail.text.toString().trim()
@@ -88,6 +90,13 @@ class RegisterFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            binding.editEmail.clearFocus()
+            binding.editPassword.clearFocus()
+            binding.editUsername.clearFocus()
+
+            val closeKeyboard = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            closeKeyboard.hideSoftInputFromWindow(binding.root.windowToken, 0)
+
             registerViewModel.register(email, username, password)
 
             registerViewModel.registerState.observe(requireActivity()) { state ->
@@ -96,21 +105,20 @@ class RegisterFragment : Fragment() {
                       binding.progressBar.visibility = View.VISIBLE
                     }
                     is RegisterState.Success -> {
+                        Toast.makeText(requireContext(), "Registro efetuado com sucesso", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(R.id.action_global_homeFragment)
                     }
                     is RegisterState.Error -> {
-                        // Registro falhou, exibir uma mensagem de erro
                         val message = state.message ?: "Ocorreu um erro durante o registro"
                         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        binding.progressBar.visibility = View.GONE
                     }
                 }
             }
 
         }
 
-
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-    android:id="@+id/navigation_home"
-        android:iconTint="@color/white"
-    android:icon="@drawable/logo_menu_characters"
-    android:title="@string/characters" />
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/logo_menu_characters"
+        android:title="@string/characters"
+        />
 
     <item
         android:id="@+id/navigation_location"
         android:icon="@drawable/location_menu_"
-        android:title="@string/location"
-        />
-
+        android:title="@string/location" />
     <item
-    android:id="@+id/navigation_episodes"
-    android:icon="@drawable/movie_menu"
-    android:title="@string/episodes"
-   />
+        android:id="@+id/navigation_episodes"
+        android:icon="@drawable/movie_menu"
+        android:title="@string/episodes" />
 </menu>

@@ -29,4 +29,9 @@
     <string name="recover_password">Clique aqui</string>
     <string name="info_recover">Redefinir senha</string>
     <string name="info_user">Digite seu endereço de e-mail para redefinir sua senha:</string>
+    <string name="logout">Deslogar</string>
+    <string name="search">Pesquisar</string>
+    <string name="filter">Filtro</string>
+    <string name="logo_app">Logo App</string>
+    <string name="remember">Lembrar de Mim</string>
 </resources>
