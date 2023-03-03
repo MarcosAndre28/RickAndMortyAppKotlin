@@ -8,23 +8,37 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.AlignmentSpan
 import android.view.*
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmortyappkotlin.R
+import com.example.rickandmortyappkotlin.data.adapater.CharacterAdapter
+import com.example.rickandmortyappkotlin.data.api.RetrofitInstance
+import com.example.rickandmortyappkotlin.data.repository.CharacterRepository
+import com.example.rickandmortyappkotlin.data.viewModel.CharacterViewModel
+import com.example.rickandmortyappkotlin.data.viewModel.CharacterViewModelFactory
 import com.example.rickandmortyappkotlin.databinding.FragmentHomeBinding
 import com.example.rickandmortyappkotlin.enum.FilterOption
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var adapter: CharacterAdapter
+    private lateinit var characterViewModel: CharacterViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,6 +120,9 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferences = requireContext().getSharedPreferences("FilterPreferences", Context.MODE_PRIVATE)
         initListeners()
+        initView()
+        initViewModel()
+        loadNextPage()
     }
     private fun saveFilterOption(filterOption: FilterOption) {
         sharedPreferences.edit().putString("filter_option", filterOption.name).apply()
@@ -132,6 +149,25 @@ class HomeFragment : Fragment() {
         )
         (requireActivity() as AppCompatActivity).supportActionBar?.title = title
 
+    }
+
+    private fun initView() {
+        val recyclerView = binding.rvMainCharacters
+        recyclerView.layoutManager = GridLayoutManager(context,2)
+        adapter = CharacterAdapter()
+        recyclerView.adapter = adapter
+    }
+    private fun initViewModel() {
+        characterViewModel = ViewModelProvider(this, CharacterViewModelFactory(CharacterRepository(RetrofitInstance.api)))
+            .get(CharacterViewModel::class.java)
+        characterViewModel.characterList.observe(viewLifecycleOwner) { characters ->
+            adapter.characterList = characters
+        }
+    }
+    private fun loadNextPage() {
+        lifecycleScope.launch {
+            characterViewModel.loadNextPage()
+        }
     }
 
     override fun onDestroyView() {

@@ -69,55 +69,55 @@
         app:layout_constraintStart_toStartOf="@+id/tvRegisterLogo"
         app:layout_constraintTop_toBottomOf="@+id/tvRegisterLogo" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardEmail"
-        android:layout_width="0dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textinputLayoutEmail"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:cardCornerRadius="@dimen/_10sdp"
-        app:cardElevation="@dimen/_10sdp"
+        android:hint="@string/email"
+        android:padding="4dp"
+        app:boxStrokeColor="@color/splash_color"
+        app:counterMaxLength="20"
+        app:endIconMode="clear_text"
+        app:helperTextTextColor="#F44336"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3">
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:startIconDrawable="@drawable/ic_person">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:ems="10"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:padding="@dimen/_8sdp"
-            android:textSize="18sp" />
-    </androidx.cardview.widget.CardView>
+            tools:ignore="TextContrastCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardPassword"
-        android:layout_width="0dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textinputLayoutPassword"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:cardCornerRadius="@dimen/_10sdp"
-        app:cardElevation="@dimen/_10sdp"
+        android:hint="@string/password"
+        android:padding="4dp"
+        app:boxStrokeColor="@color/splash_color"
+        app:counterMaxLength="20"
+        app:endIconMode="password_toggle"
+        app:helperTextTextColor="#F44336"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardEmail">
+        app:layout_constraintTop_toBottomOf="@+id/textinputLayoutEmail"
+        app:startIconDrawable="@drawable/ic_lock">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:ems="10"
-            android:hint="@string/password"
             android:inputType="textPassword"
-            android:padding="@dimen/_8sdp"
-            android:textSize="18sp" />
-    </androidx.cardview.widget.CardView>
+            android:maxLength="20"
+            tools:ignore="TextContrastCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.button.MaterialButton
@@ -129,8 +129,8 @@
         android:text="@string/login"
         android:textAllCaps="false"
         app:backgroundTint="@null"
-        app:layout_constraintEnd_toEndOf="@+id/cardPassword"
-        app:layout_constraintStart_toStartOf="@+id/cardPassword"
+        app:layout_constraintEnd_toEndOf="@+id/textinputLayoutPassword"
+        app:layout_constraintStart_toStartOf="@+id/textinputLayoutPassword"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <LinearLayout
@@ -138,16 +138,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/cardPassword"
-        app:layout_constraintTop_toBottomOf="@+id/cardPassword"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@+id/textinputLayoutPassword"
+        app:layout_constraintTop_toBottomOf="@+id/textinputLayoutPassword">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/recovery_password"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:text="@string/recovery_password" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvRecoverPassword"
@@ -179,7 +179,7 @@
         android:buttonTint="@color/splash_color"
         android:text="@string/remember"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="@+id/cardPassword"
+        app:layout_constraintEnd_toEndOf="@+id/textinputLayoutPassword"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/linearLayout"
         app:layout_constraintTop_toTopOf="@+id/linearLayout"
