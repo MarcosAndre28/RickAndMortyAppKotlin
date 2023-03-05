@@ -1,30 +1,28 @@
 package com.example.rickandmortyappkotlin.data.repository
 
-import androidx.lifecycle.MutableLiveData
-import com.example.rickandmortyappkotlin.data.api.Services
-import com.example.rickandmortyappkotlin.data.model.Character
+import com.example.rickandmortyappkotlin.data.api.RetrofitInstance
+import com.example.rickandmortyappkotlin.data.model.CharacterList
+import retrofit2.Response
 
-class CharacterRepository(private val api: Services) {
+class CharacterRepository() {
 
-    private var currentPage = 1
-    private var isLastPage = false
+    suspend fun getCharacters(page: Int): CharacterList {
+        return RetrofitInstance.api.getCharacters(page)
+    }
 
-    val characterList = MutableLiveData<List<Character>>()
+    suspend fun getCharactersByName(name: String): CharacterList{
+        return RetrofitInstance.api.getCharactersByName(name)
+    }
 
-    suspend fun loadNextPage() {
-        if (isLastPage) return
+    suspend fun getCharactersbyStatusAndGender(status : String, gender: String, page:Int): CharacterList{
+        return RetrofitInstance.api.getCharactersbyStatusAndGender(status, gender, page)
+    }
 
-        val response = api.getCharacters(currentPage)
+    suspend fun getCharactersByStatus(status : String, page:Int): CharacterList{
+        return RetrofitInstance.api.getCharactersByStatus(status, page)
+    }
 
-        if (response.isSuccessful) {
-            val characters = response.body()?.results ?: emptyList()
-
-            if (characters.isNotEmpty()) {
-                characterList.postValue(characterList.value?.plus(characters) ?: characters)
-                currentPage++
-            } else {
-                isLastPage = true
-            }
-        }
+    suspend fun getCharactersByGender(gender : String, page:Int): CharacterList{
+        return RetrofitInstance.api.getCharactersByGender(gender, page)
     }
 }

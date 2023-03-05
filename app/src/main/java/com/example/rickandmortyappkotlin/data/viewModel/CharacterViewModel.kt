@@ -1,18 +1,62 @@
 package com.example.rickandmortyappkotlin.data.viewModel
 
-import android.app.Application
-import androidx.lifecycle.*
-import com.example.rickandmortyappkotlin.data.api.Services
-import com.example.rickandmortyappkotlin.data.model.CharacterList
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.rickandmortyappkotlin.data.model.CharacterData
 import com.example.rickandmortyappkotlin.data.repository.CharacterRepository
 import kotlinx.coroutines.launch
-import retrofit2.Response
 
 class CharacterViewModel(private val repository: CharacterRepository) : ViewModel() {
 
-    val characterList = repository.characterList
+    var listCharactersInEpisode = MutableLiveData<List<CharacterData>>()
+    var filterValue = MutableLiveData<Array<Int>>()
+    var isFilter = MutableLiveData<Boolean>()
 
-    suspend fun loadNextPage() {
-        repository.loadNextPage()
+    init {
+        filterValue.value = arrayOf(0, 0)
+        isFilter.value = false
     }
+
+    fun getCharacters(page: Int) {
+        viewModelScope.launch{
+            val characters = repository.getCharacters(page)
+            listCharactersInEpisode.value = characters.results
+            isFilter.value = false
+        }
+    }
+
+    fun getByName(name: String){
+        viewModelScope.launch{
+            val characters = repository.getCharactersByName(name)
+            listCharactersInEpisode.value = characters.results
+            isFilter.value = true
+        }
+    }
+
+    fun getByStatusAndGender(status : String, gender: String, page:Int){
+        viewModelScope.launch{
+            val characters = repository.getCharactersbyStatusAndGender(status, gender, page)
+            listCharactersInEpisode.value = characters.results
+            isFilter.value = true
+        }
+    }
+
+    fun getByStatus(status : String, page:Int){
+        viewModelScope.launch{
+            val characters = repository.getCharactersByStatus(status, page)
+            listCharactersInEpisode.value = characters.results
+            isFilter.value = true
+        }
+    }
+
+    fun getByGender(gender: String, page:Int){
+        viewModelScope.launch{
+            val characters = repository.getCharactersByGender(gender, page)
+            listCharactersInEpisode.value = characters.results
+            isFilter.value = true
+        }
+    }
+
 }
+

@@ -1,11 +1,12 @@
 package com.example.rickandmortyappkotlin.data.model
 
+import java.io.Serializable
+
 
 data class CharacterList(
-    var results : List<Character>
+    var results : List<CharacterData>
 )
-
-data class Character(
+data class CharacterData(
     var id : Int,
     var name : String,
     var status : String,
@@ -14,5 +15,5 @@ data class Character(
     var origin: LocationData,
     var location : LocationData,
     var image : String,
-    var spisode : List<String>
-)
+    var episode : List<String>
+) : Serializable

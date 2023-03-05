@@ -1,5 +1,6 @@
 package com.example.rickandmortyappkotlin.ui
 
+import FilterDialogFragment
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -8,38 +9,31 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.AlignmentSpan
 import android.view.*
-import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmortyappkotlin.R
 import com.example.rickandmortyappkotlin.data.adapater.CharacterAdapter
-import com.example.rickandmortyappkotlin.data.api.RetrofitInstance
 import com.example.rickandmortyappkotlin.data.repository.CharacterRepository
 import com.example.rickandmortyappkotlin.data.viewModel.CharacterViewModel
 import com.example.rickandmortyappkotlin.data.viewModel.CharacterViewModelFactory
 import com.example.rickandmortyappkotlin.databinding.FragmentHomeBinding
-import com.example.rickandmortyappkotlin.enum.FilterOption
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var adapter: CharacterAdapter
-    private lateinit var characterViewModel: CharacterViewModel
 
+
+    private val characterViewModel: CharacterViewModel by activityViewModels{CharacterViewModelFactory(CharacterRepository())}
+    private var characterAdapter = CharacterAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -71,6 +65,7 @@ class HomeFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                characterViewModel.getByName(query.toString())
                 return false
             }
 
@@ -91,17 +86,8 @@ class HomeFragment : Fragment() {
                return true
             }
             R.id.filter -> {
-                val options = arrayOf("Vivos", "Mortos","Todos")
-                val currentOption = getFilterOption()
-
-                AlertDialog.Builder(requireContext())
-                    .setTitle("Select an option")
-                    .setSingleChoiceItems(options, currentOption.ordinal) { dialog, which ->
-                        val selectedOption = FilterOption.values()[which]
-                        saveFilterOption(selectedOption)
-                        dialog.dismiss()
-                    }
-                    .show()
+                val dialog = FilterDialogFragment()
+                dialog.show(childFragmentManager, "FilterDialogFragment")
                 return true
             }
         }
@@ -121,15 +107,6 @@ class HomeFragment : Fragment() {
         sharedPreferences = requireContext().getSharedPreferences("FilterPreferences", Context.MODE_PRIVATE)
         initListeners()
         initView()
-        initViewModel()
-        loadNextPage()
-    }
-    private fun saveFilterOption(filterOption: FilterOption) {
-        sharedPreferences.edit().putString("filter_option", filterOption.name).apply()
-    }
-    private fun getFilterOption(): FilterOption {
-        val optionName = sharedPreferences.getString("filter_option", null)
-        return optionName?.let { FilterOption.valueOf(it) } ?: FilterOption.ALL
     }
 
     private fun initListeners() {
@@ -152,24 +129,30 @@ class HomeFragment : Fragment() {
     }
 
     private fun initView() {
+
+        characterViewModel.listCharactersInEpisode.observe(viewLifecycleOwner) { list ->
+            characterAdapter.setCharacters(list)
+        }
+
         val recyclerView = binding.rvMainCharacters
         recyclerView.layoutManager = GridLayoutManager(context,2)
-        adapter = CharacterAdapter()
-        recyclerView.adapter = adapter
-    }
-    private fun initViewModel() {
-        characterViewModel = ViewModelProvider(this, CharacterViewModelFactory(CharacterRepository(RetrofitInstance.api)))
-            .get(CharacterViewModel::class.java)
-        characterViewModel.characterList.observe(viewLifecycleOwner) { characters ->
-            adapter.characterList = characters
+        recyclerView.adapter = characterAdapter
+
+        characterViewModel.isFilter.observe(viewLifecycleOwner){
+            binding.txtReset.visibility = if (it) View.VISIBLE else View.INVISIBLE
         }
-    }
-    private fun loadNextPage() {
-        lifecycleScope.launch {
-            characterViewModel.loadNextPage()
+
+        binding.txtReset.setOnClickListener {
+            characterViewModel.getCharacters(1)
+            characterViewModel.filterValue.value = arrayOf(0,0)
         }
+
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        characterViewModel.getCharacters(1)
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

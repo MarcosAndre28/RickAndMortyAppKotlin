@@ -23,6 +23,7 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/main_graph" />
 
+
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
