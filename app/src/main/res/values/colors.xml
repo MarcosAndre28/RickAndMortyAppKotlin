@@ -20,6 +20,7 @@
     <color name="gradient_color_1">#20EFBD</color>
     <color name="gradient_color_2">#08DB74</color>
     <color name="gradient_color_3">#8EE130</color>
+    <color name="text">#F6F213</color>
 
     <color name="black_ligth">#171717</color>
     <color name="black_final">#000000</color>
