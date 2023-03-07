@@ -12,6 +12,9 @@ class CharacterViewModel(private val repository: CharacterRepository) : ViewMode
     var listCharactersInEpisode = MutableLiveData<List<CharacterData>>()
     var filterValue = MutableLiveData<Array<Int>>()
     var isFilter = MutableLiveData<Boolean>()
+    private var currentPage = 1
+    private var isLoading = false
+    private var totalPages = 1000
 
     init {
         filterValue.value = arrayOf(0, 0)
@@ -57,6 +60,19 @@ class CharacterViewModel(private val repository: CharacterRepository) : ViewMode
             isFilter.value = true
         }
     }
+    fun loadNextPage() {
+        if (currentPage <= totalPages) {
+            viewModelScope.launch {
+                val characterList = repository.getCharacters(currentPage)
+                if (characterList.results.isNotEmpty()) {
+                    listCharactersInEpisode.value = (listCharactersInEpisode.value ?: emptyList()) + characterList.results
+                    totalPages = characterList.info.pages
+                }
+            }
+            currentPage++
+        }
+    }
+
 
 }
 

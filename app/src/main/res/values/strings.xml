@@ -55,4 +55,5 @@
     <string name="title_origin">Origin</string>
     <string name="title_location">Location</string>
     <string name="title_reset">Reset</string>
+    <string name="planet">Planeta</string>
 </resources>

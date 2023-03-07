@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmortyappkotlin.R
 import com.example.rickandmortyappkotlin.data.adapater.CharacterAdapter
 import com.example.rickandmortyappkotlin.data.repository.CharacterRepository
@@ -135,23 +137,37 @@ class HomeFragment : Fragment() {
         }
 
         val recyclerView = binding.rvMainCharacters
-        recyclerView.layoutManager = GridLayoutManager(context,2)
+        recyclerView.layoutManager = GridLayoutManager(context, 2)
         recyclerView.adapter = characterAdapter
 
-        characterViewModel.isFilter.observe(viewLifecycleOwner){
-            binding.txtReset.visibility = if (it) View.VISIBLE else View.INVISIBLE
+        characterViewModel.isFilter.observe(viewLifecycleOwner) { isVisible ->
+            binding.txtReset.visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
         }
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+                if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
+                    characterViewModel.loadNextPage()
+                }
+            }
+        })
 
         binding.txtReset.setOnClickListener {
             characterViewModel.getCharacters(1)
-            characterViewModel.filterValue.value = arrayOf(0,0)
+            characterViewModel.filterValue.value = arrayOf(0, 0)
         }
-
     }
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        characterViewModel.getCharacters(1)
+        characterViewModel.loadNextPage()
     }
     override fun onDestroyView() {
         super.onDestroyView()
