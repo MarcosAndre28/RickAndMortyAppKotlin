@@ -32,7 +32,7 @@ android {
     kotlinOptions {
         jvmTarget = '11'
     }
-    viewBinding{
+    viewBinding {
         enable = true
     }
 }
@@ -79,6 +79,5 @@ dependencies {
     // FireBase
     implementation platform('com.google.firebase:firebase-bom:31.2.2')
     implementation 'com.google.firebase:firebase-auth:21.1.0'
-
 
 }

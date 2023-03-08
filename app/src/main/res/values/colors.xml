@@ -29,5 +29,6 @@
     <color name="green_dark">#36951B</color>
     <color name="green_blue">#E6139991</color>
     <color name="black_gray">#565656</color>
+    <color name="light_grey">#8F8A8A</color>
 
 </resources>

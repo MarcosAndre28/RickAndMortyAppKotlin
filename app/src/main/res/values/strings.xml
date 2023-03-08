@@ -56,4 +56,8 @@
     <string name="title_location">Location</string>
     <string name="title_reset">Reset</string>
     <string name="planet">Planeta</string>
+    <string name="season">Temporada</string>
+    <string name="episode_number_format">Episode %s</string>
+    <string name="expand">expand</string>
+    <string name="close">Fechar</string>
 </resources>

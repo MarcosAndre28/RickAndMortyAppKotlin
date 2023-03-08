@@ -5,33 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imgPlanetRv"
-        android:layout_width="330dp"
-        android:layout_height="133dp"
+    <androidx.cardview.widget.CardView
+        android:layout_width="390dp"
+        android:layout_height="219dp"
         android:layout_marginTop="8dp"
-        android:scaleType="centerCrop"
         android:layout_marginBottom="8dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars"
-        android:contentDescription="@string/planet" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/itemTvNamePlanet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/planet"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/splash_color"
-        app:layout_constraintBottom_toBottomOf="@+id/imgPlanetRv"
-        app:layout_constraintEnd_toEndOf="@+id/imgPlanetRv"
-        app:layout_constraintHorizontal_bias="0.025"
-        app:layout_constraintStart_toStartOf="@+id/imgPlanetRv"
-        app:layout_constraintTop_toTopOf="@+id/imgPlanetRv"
-        app:layout_constraintVertical_bias="0.929" />
+        <ImageView
+            android:id="@+id/imgPlanetRv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/planet"
+            android:scaleType="centerCrop"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/itemTvNamePlanet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:padding="8dp"
+            android:text="@string/planet"
+            android:textColor="@color/text"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

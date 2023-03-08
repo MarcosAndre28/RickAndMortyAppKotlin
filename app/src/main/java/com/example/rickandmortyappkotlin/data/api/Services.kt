@@ -1,6 +1,7 @@
 package com.example.rickandmortyappkotlin.data.api
 
 import com.example.rickandmortyappkotlin.data.model.CharacterList
+import com.example.rickandmortyappkotlin.data.model.EpisodesResponse
 import com.example.rickandmortyappkotlin.data.model.LocationList
 import com.example.rickandmortyappkotlin.data.model.Planet
 import retrofit2.Response
@@ -27,4 +28,7 @@ interface Services {
 
         @GET("location")
         suspend fun getAllPlanet() : LocationList
+
+        @GET("episode")
+        suspend fun getEpisodesBySeason(@Query("season") season: Int, @Query("page") page : Int): Response<EpisodesResponse>
 }
