@@ -47,7 +47,7 @@ class SplashFragment : Fragment() {
     private fun login(){
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null){
-            Toast.makeText(requireContext(), "Bem vindo novamente", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Bem-vindo de volta", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_splashFragment_to_navigation_home)
         }
         else {

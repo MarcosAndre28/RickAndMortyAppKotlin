@@ -4,6 +4,7 @@ import FilterDialogFragment
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import android.text.Layout
 import android.text.Spannable
 import android.text.SpannableString
@@ -62,6 +63,11 @@ class HomeFragment : Fragment() {
         searchView.setOnCloseListener {
             menu.findItem(R.id.filter).isVisible = true
             menu.findItem(R.id.logout).isVisible = true
+            searchView.clearFocus()
+            searchView.onActionViewCollapsed()
+            searchView.setQuery("",false)
+            characterViewModel.getCharacters(1)
+            characterViewModel.filterValue.value = arrayOf(0, 0)
             false
         }
 
@@ -83,10 +89,15 @@ class HomeFragment : Fragment() {
             R.id.logout -> {
                 val firebaseAuth = FirebaseAuth.getInstance()
                 firebaseAuth.signOut()
-                findNavController().navigate(R.id.action_navigation_home_to_navigation)
-                Toast.makeText(requireContext(), "Usuario deslogado", Toast.LENGTH_SHORT).show()
-               return true
+                binding.logoutProgressBar.visibility = View.VISIBLE
+                Handler().postDelayed({
+                    binding.logoutProgressBar.visibility = View.GONE
+                    findNavController().navigate(R.id.action_navigation_home_to_navigation)
+                    Toast.makeText(requireContext(), "Você foi desconectado.", Toast.LENGTH_SHORT).show()
+                }, 2000)
+                return true
             }
+
             R.id.filter -> {
                 val dialog = FilterDialogFragment()
                 dialog.show(childFragmentManager, "FilterDialogFragment")
