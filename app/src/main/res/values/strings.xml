@@ -71,4 +71,6 @@
     <string name="species">Species:</string>
     <string name="status_">Status:</string>
     <string name="alive">Alive</string>
+    <string name="type">Type</string>
+    <string name="dimension">Dimension</string>
 </resources>

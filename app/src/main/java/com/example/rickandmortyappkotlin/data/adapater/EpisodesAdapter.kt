@@ -51,37 +51,53 @@ class EpisodesAdapter(private val viewModel: EpisodesViewModel) : RecyclerView.A
 
         private var isExpanded = false
 
-        init {
-            itemView.setOnClickListener {
-                isExpanded = !isExpanded
-                ivEpisodeExpandButton.setImageResource(if (isExpanded) R.drawable.expand_less else R.drawable.baseline_expand_more)
-                hiddenLayout.visibility = if (isExpanded) View.VISIBLE else View.GONE
-            }
-        }
-
         fun bind(episode: Episode) {
             tvEpisodeName.text = episode.name
             tvEpisodeSeason.text = episode.episode
             episodeAirDate.text = episode.air_date
             hiddenLayout.visibility = if (isExpanded) View.VISIBLE else View.GONE
 
-            // Get the names of all characters in the episode
-            val characterNames = StringBuilder()
-            CoroutineScope(Dispatchers.Main).launch {
-                for (url in episode.characters) {
-                    val character = viewModel.getCharacterByUrl(url)
-                    if (character != null) {
-                        characterNames.append(character.name).append(", ")
+            if (isExpanded) {
+                val characterNames = StringBuilder()
+                CoroutineScope(Dispatchers.Main).launch {
+                    for (url in episode.characters) {
+                        val character = viewModel.getCharacterByUrl(url)
+                        if (character != null) {
+                            characterNames.append(character.name).append(", ")
+                        }
+                    }
+                    if (characterNames.isNotEmpty()) {
+                        characterNames.deleteCharAt(characterNames.length - 1)
+                        characters.text = characterNames.toString()
+                    } else {
+                        characters.text = "No characters found"
                     }
                 }
-                if (characterNames.isNotEmpty()) {
-                    characterNames.deleteCharAt(characterNames.length - 1) // Remove the last comma
-                    characters.text = characterNames.toString()
-                } else {
-                    characters.text = "No characters found"
-                }
-                itemView.post {
-                    notifyDataSetChanged()
+            } else {
+                characters.text = ""
+            }
+
+            itemView.setOnClickListener {
+                isExpanded = !isExpanded
+                ivEpisodeExpandButton.setImageResource(if (isExpanded) R.drawable.expand_less else R.drawable.baseline_expand_more)
+                hiddenLayout.visibility = if (isExpanded) View.VISIBLE else View.GONE
+
+                if (isExpanded && characters.text.isEmpty()) {
+                    val characterNames = StringBuilder()
+                    CoroutineScope(Dispatchers.Main).launch {
+                        for (url in episode.characters) {
+                            val character = viewModel.getCharacterByUrl(url)
+                            if (character != null) {
+                                characterNames.append(character.name).append(", ")
+                            }
+                        }
+                        if (characterNames.isNotEmpty()) {
+                            characterNames.deleteCharAt(characterNames.length - 1)
+                            characters.text = characterNames.toString()
+                        } else {
+                            characters.text = "No characters found"
+                        }
+                    }
                 }
             }
         }

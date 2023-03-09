@@ -20,6 +20,7 @@ class Episode(
     val air_date: String,
     val episode: String,
     var characters: List<String>,
+    var characterNames: String = "",
     var isExpanded: Boolean = false,
     val url: String,
     val created: String
