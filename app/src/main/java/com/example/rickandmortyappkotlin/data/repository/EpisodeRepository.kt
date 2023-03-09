@@ -1,8 +1,9 @@
 package com.example.rickandmortyappkotlin.data.repository
 
 import com.example.rickandmortyappkotlin.data.api.RetrofitInstance
+import com.example.rickandmortyappkotlin.data.model.CharacterData
 import com.example.rickandmortyappkotlin.data.model.Episode
-import com.google.android.gms.common.api.ApiException
+import retrofit2.Response
 
 class EpisodesRepository {
 
@@ -22,6 +23,9 @@ class EpisodesRepository {
             }
         }
         return episodesList
+    }
+    suspend fun getCharacterByUrl(id: Int): Response<CharacterData> {
+        return RetrofitInstance.api.getCharacterById(id)
     }
 }
 

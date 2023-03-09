@@ -34,7 +34,7 @@ class DetailFragment : Fragment() {
     private fun initView(){
         binding.apply {
             val character = args.character
-            txtIdCharacter.text= character.id.toString()
+            //txtIdCharacter.text= character.id.toString()
             txtStatus.text= character.status
             Picasso.get().load(character.image).into(imgCharacter)
             txtName.text= character.name

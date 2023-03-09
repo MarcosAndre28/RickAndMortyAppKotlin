@@ -19,7 +19,7 @@ class EpisodesFragment : Fragment() {
     private var _binding : FragmentEpisodesBinding? = null
     private val binding get() = _binding!!
     private val episodeViewModel: EpisodesViewModel by activityViewModels{ EpisodeViewModelFactory(EpisodesRepository())}
-    private val episodesAdapter by lazy { EpisodesAdapter() }
+    private val episodesAdapter by lazy { EpisodesAdapter(episodeViewModel) }
     private var currentSeason = 1
     private var currentPage = 1
 
@@ -52,11 +52,6 @@ class EpisodesFragment : Fragment() {
                     }
                 }
             })
-            episodesAdapter.onEpisodeClickListener = { episode ->
-                val dialog = EpisodeDetailsDialogFragment.newInstance(episode)
-                val fragmentTransaction = parentFragmentManager.beginTransaction()
-                dialog.show(fragmentTransaction, EpisodeDetailsDialogFragment.TAG)
-            }
         }
         episodeViewModel.getEpisodesBySeason(currentSeason, currentPage)
         episodeViewModel.getEpisodesList().observe(viewLifecycleOwner) { episodes ->

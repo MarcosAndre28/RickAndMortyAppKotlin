@@ -20,6 +20,7 @@
     <string name="recovery_password">Esqueceu a senha?</string>
     <string name="episodes">Episódios</string>
     <string name="location">Localização</string>
+    <string name="location_rv">Localização:</string>
     <string name="characters">Personagens</string>
     <string name="main">Personagens principais</string>
     <string name="title_rv">Rick Sanchez</string>
@@ -60,4 +61,14 @@
     <string name="episode_number_format">Episode %s</string>
     <string name="expand">expand</string>
     <string name="close">Fechar</string>
+    <string name="total_episodes">Total episodes:</string>
+    <string name="pilot">Pilot</string>
+    <string name="earth">Earth</string>
+    <string name="origine">Origine:</string>
+    <string name="male">Male</string>
+    <string name="gender">Gender:</string>
+    <string name="human">Human</string>
+    <string name="species">Species:</string>
+    <string name="status_">Status:</string>
+    <string name="alive">Alive</string>
 </resources>

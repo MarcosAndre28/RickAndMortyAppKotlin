@@ -1,11 +1,9 @@
 package com.example.rickandmortyappkotlin.data.api
 
-import com.example.rickandmortyappkotlin.data.model.CharacterList
-import com.example.rickandmortyappkotlin.data.model.EpisodesResponse
-import com.example.rickandmortyappkotlin.data.model.LocationList
-import com.example.rickandmortyappkotlin.data.model.Planet
+import com.example.rickandmortyappkotlin.data.model.*
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface Services {
@@ -31,4 +29,7 @@ interface Services {
 
         @GET("episode")
         suspend fun getEpisodesBySeason(@Query("season") season: Int, @Query("page") page : Int): Response<EpisodesResponse>
+
+        @GET("character/{id}")
+        suspend fun getCharacterById(@Path("id") id: Int): Response<CharacterData>
 }

@@ -72,7 +72,5 @@ class CharacterViewModel(private val repository: CharacterRepository) : ViewMode
             currentPage++
         }
     }
-
-
 }
 

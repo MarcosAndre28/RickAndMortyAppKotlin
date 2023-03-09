@@ -19,7 +19,8 @@ class Episode(
     val name: String,
     val air_date: String,
     val episode: String,
-    val characters: List<String>,
+    var characters: List<String>,
+    var isExpanded: Boolean = false,
     val url: String,
     val created: String
 ) : Serializable
