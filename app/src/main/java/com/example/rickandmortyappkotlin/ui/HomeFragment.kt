@@ -26,16 +26,23 @@ import com.example.rickandmortyappkotlin.data.repository.CharacterRepository
 import com.example.rickandmortyappkotlin.data.viewModel.CharacterViewModel
 import com.example.rickandmortyappkotlin.data.viewModel.CharacterViewModelFactory
 import com.example.rickandmortyappkotlin.databinding.FragmentHomeBinding
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.firebase.auth.FirebaseAuth
+import java.util.*
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var shimmerFrameLayout: ShimmerFrameLayout
 
 
-    private val characterViewModel: CharacterViewModel by activityViewModels{CharacterViewModelFactory(CharacterRepository())}
+    private val characterViewModel: CharacterViewModel by activityViewModels {
+        CharacterViewModelFactory(
+            CharacterRepository()
+        )
+    }
     private var characterAdapter = CharacterAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,13 +52,13 @@ class HomeFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
 
-        val navMenu =  menu.findItem(R.id.navigation_home)
+        val navMenu = menu.findItem(R.id.navigation_home)
         navMenu.isVisible = false
 
-        val navigationLocation =  menu.findItem(R.id.navigation_location)
+        val navigationLocation = menu.findItem(R.id.navigation_location)
         navigationLocation.isVisible = false
 
-        val navigationEpisodes =  menu.findItem(R.id.navigation_episodes)
+        val navigationEpisodes = menu.findItem(R.id.navigation_episodes)
         navigationEpisodes.isVisible = false
 
         val searchItem = menu.findItem(R.id.search)
@@ -65,7 +72,7 @@ class HomeFragment : Fragment() {
             menu.findItem(R.id.logout).isVisible = true
             searchView.clearFocus()
             searchView.onActionViewCollapsed()
-            searchView.setQuery("",false)
+            searchView.setQuery("", false)
             characterViewModel.getCharacters(1)
             characterViewModel.filterValue.value = arrayOf(0, 0)
             false
@@ -93,7 +100,8 @@ class HomeFragment : Fragment() {
                 Handler().postDelayed({
                     binding.logoutProgressBar.visibility = View.GONE
                     findNavController().navigate(R.id.action_navigation_home_to_navigation)
-                    Toast.makeText(requireContext(), "Você foi desconectado.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Você foi desconectado.", Toast.LENGTH_SHORT)
+                        .show()
                 }, 2000)
                 return true
             }
@@ -117,14 +125,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedPreferences = requireContext().getSharedPreferences("FilterPreferences", Context.MODE_PRIVATE)
+        sharedPreferences =
+            requireContext().getSharedPreferences("FilterPreferences", Context.MODE_PRIVATE)
         initListeners()
         initView()
     }
 
     private fun initListeners() {
-       (activity as MainActivity).binding.bottomNavigation.visibility = View.VISIBLE
-        activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.splash_color)
+        (activity as MainActivity).binding.bottomNavigation.visibility = View.VISIBLE
+        activity?.window?.statusBarColor =
+            ContextCompat.getColor(requireContext(), R.color.splash_color)
 
         val toolbar = binding.materialToolbar
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
@@ -145,7 +155,11 @@ class HomeFragment : Fragment() {
 
         characterViewModel.listCharactersInEpisode.observe(viewLifecycleOwner) { list ->
             characterAdapter.setCharacters(list)
+            binding.shimmerFrameLayout.stopShimmer()
+            binding.shimmerFrameLayout.visibility = View.GONE
+            binding.rvMainCharacters.visibility = View.VISIBLE
         }
+
 
         val recyclerView = binding.rvMainCharacters
         recyclerView.layoutManager = GridLayoutManager(context, 2)
@@ -180,6 +194,7 @@ class HomeFragment : Fragment() {
         super.onAttach(context)
         characterViewModel.loadNextPage()
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

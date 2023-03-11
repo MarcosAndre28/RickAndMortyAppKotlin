@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.HomeFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -13,7 +13,7 @@
         android:background="@color/splash_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/title_character"
@@ -34,9 +34,9 @@
         android:layout_width="36dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:visibility="gone"
         android:text="@string/title_reset"
         android:textColor="@color/splash_color"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/rvMainCharacters"
         app:layout_constraintTop_toBottomOf="@+id/materialToolbar" />
 
@@ -49,12 +49,12 @@
         android:layout_marginTop="16dp"
         android:layout_weight="1"
         android:clickable="false"
+        android:contentDescription="@string/logo_app"
         android:src="@drawable/logo_menu_top"
         app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
         app:layout_constraintStart_toStartOf="@+id/materialToolbar"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        android:contentDescription="@string/logo_app" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMainCharacters"
@@ -65,21 +65,81 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_character"
         tools:listitem="@layout/main_characters_rv" />
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerFrameLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autofillHints="name"
+        android:animateLayoutChanges="true"
+        android:animationCache="true"
+        app:shimmer_repeat_mode="restart"
+        app:shimmer_shape="radial"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_character" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <include layout="@layout/shimmer_layout"/>
+                <include layout="@layout/shimmer_layout"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <include layout="@layout/shimmer_layout"/>
+                <include layout="@layout/shimmer_layout"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <include layout="@layout/shimmer_layout"/>
+                <include layout="@layout/shimmer_layout"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <include layout="@layout/shimmer_layout"/>
+                <include layout="@layout/shimmer_layout"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <ProgressBar
         android:id="@+id/logoutProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/rvMainCharacters"
         app:layout_constraintEnd_toEndOf="@+id/rvMainCharacters"
         app:layout_constraintHorizontal_bias="0.498"
-        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/rvMainCharacters"
         app:layout_constraintTop_toTopOf="@+id/rvMainCharacters"
         app:layout_constraintVertical_bias="0.886" />

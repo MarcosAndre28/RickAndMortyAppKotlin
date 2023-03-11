@@ -36,7 +36,6 @@ class ExpandableLayoutManager(context: Context) : LinearLayoutManager(context) {
             measureChildWithMargins(view, widthSpec, 0)
         }
         setMeasuredDimension(widthSpec,heightSpec)
-       // setMeasuredDimension(View.MeasureSpec.getSize(widthSpec), View.MeasureSpec.getSize(heightSpec))
     }
 
     override fun isAutoMeasureEnabled(): Boolean {
