@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_global_homeFragment"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_global_navigation_home"
+            app:destination="@id/navigation_home" />
     </navigation>
     <fragment
         android:id="@+id/navigation_home"

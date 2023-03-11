@@ -106,7 +106,7 @@ class RegisterFragment : Fragment() {
                     }
                     is RegisterState.Success -> {
                         Toast.makeText(requireContext(), "Registro efetuado com sucesso", Toast.LENGTH_SHORT).show()
-                        findNavController().navigate(R.id.action_global_homeFragment)
+                        findNavController().navigate(R.id.action_global_navigation_home)
                     }
                     is RegisterState.Error -> {
                         val message = state.message ?: "Ocorreu um erro durante o registro"
