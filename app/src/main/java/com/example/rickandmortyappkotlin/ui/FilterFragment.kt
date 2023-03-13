@@ -25,14 +25,10 @@ class FilterDialogFragment : DialogFragment() {
     private val characterViewModel: CharacterViewModel by activityViewModels{ CharacterViewModelFactory(CharacterRepository()) }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        // Crie um diálogo com o estilo de tema apropriado
         val dialog = Dialog(requireContext(), R.style.AlertDialogTheme)
 
-        // Inflar o layout do diálogo
         _binding = FragmentFilterBinding.inflate(layoutInflater)
         dialog.setContentView(binding.root)
-
-        // Configurar o tamanho do diálogo
 
         dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         dialog.window?.setGravity(Gravity.BOTTOM)

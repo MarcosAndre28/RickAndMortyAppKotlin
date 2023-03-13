@@ -35,7 +35,6 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var shimmerFrameLayout: ShimmerFrameLayout
 
 
     private val characterViewModel: CharacterViewModel by activityViewModels {
@@ -80,7 +79,14 @@ class HomeFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                characterViewModel.getByName(query.toString())
+                binding.shimmerFrameLayout.startShimmer()
+                binding.shimmerFrameLayout.visibility = View.VISIBLE
+                binding.rvMainCharacters.visibility = View.GONE
+                Handler().postDelayed({
+                    characterViewModel.getByName(query.toString())
+                    binding.shimmerFrameLayout.stopShimmer()
+                    binding.shimmerFrameLayout.visibility = View.GONE
+                },1000)
                 return false
             }
 
@@ -125,8 +131,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedPreferences =
-            requireContext().getSharedPreferences("FilterPreferences", Context.MODE_PRIVATE)
+        sharedPreferences = requireContext().getSharedPreferences("FilterPreferences", Context.MODE_PRIVATE)
         initListeners()
         initView()
     }
@@ -152,13 +157,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun initView() {
+        binding.rvMainCharacters.visibility = View.GONE
+        binding.shimmerFrameLayout.startShimmer()
+        binding.shimmerFrameLayout.visibility = View.VISIBLE
+        Handler().postDelayed({
+            characterViewModel.listCharactersInEpisode.observe(viewLifecycleOwner) { list ->
+                characterAdapter.setCharacters(list)
+                binding.shimmerFrameLayout.stopShimmer()
+                binding.shimmerFrameLayout.visibility = View.GONE
+                binding.rvMainCharacters.visibility = View.VISIBLE
+            }
 
-        characterViewModel.listCharactersInEpisode.observe(viewLifecycleOwner) { list ->
-            characterAdapter.setCharacters(list)
-            binding.shimmerFrameLayout.stopShimmer()
-            binding.shimmerFrameLayout.visibility = View.GONE
-            binding.rvMainCharacters.visibility = View.VISIBLE
-        }
 
 
         val recyclerView = binding.rvMainCharacters
@@ -166,7 +175,15 @@ class HomeFragment : Fragment() {
         recyclerView.adapter = characterAdapter
 
         characterViewModel.isFilter.observe(viewLifecycleOwner) { isVisible ->
-            binding.txtReset.visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
+            binding.shimmerFrameLayout.startShimmer()
+            binding.shimmerFrameLayout.visibility = View.VISIBLE
+            binding.rvMainCharacters.visibility = View.GONE
+            Handler().postDelayed({
+                binding.txtReset.visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
+                binding.shimmerFrameLayout.stopShimmer()
+                binding.rvMainCharacters.visibility = View.VISIBLE
+                binding.shimmerFrameLayout.visibility = View.GONE
+            },1000)
         }
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -182,10 +199,18 @@ class HomeFragment : Fragment() {
                 }
             }
         })
+        }, 2000)
 
         binding.txtReset.setOnClickListener {
-            characterViewModel.getCharacters(1)
-            characterViewModel.filterValue.value = arrayOf(0, 0)
+            binding.shimmerFrameLayout.startShimmer()
+            binding.shimmerFrameLayout.visibility = View.VISIBLE
+            binding.rvMainCharacters.visibility = View.GONE
+            Handler().postDelayed({
+                characterViewModel.getCharacters(1)
+                characterViewModel.filterValue.value = arrayOf(0, 0)
+                binding.shimmerFrameLayout.stopShimmer()
+                binding.shimmerFrameLayout.visibility = View.GONE
+            },1000)
         }
     }
 

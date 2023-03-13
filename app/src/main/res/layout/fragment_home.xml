@@ -20,13 +20,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="220dp"
         android:text="@string/title_characters"
         android:textColor="@color/splash_color"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/txt_reset"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/rvMainCharacters"
+        app:layout_constraintHorizontal_bias="0.842"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialToolbar" />
 
     <TextView
@@ -34,10 +35,11 @@
         android:layout_width="36dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="28dp"
         android:text="@string/title_reset"
         android:textColor="@color/splash_color"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/rvMainCharacters"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialToolbar" />
 
     <ImageView
