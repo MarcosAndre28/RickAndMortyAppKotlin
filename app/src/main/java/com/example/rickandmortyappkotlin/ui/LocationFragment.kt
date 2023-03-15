@@ -1,6 +1,7 @@
 package com.example.rickandmortyappkotlin.ui
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -43,14 +44,23 @@ class LocationFragment : Fragment() {
     }
 
     private fun initView(){
-        val adapter = PlanetAdapter()
-        binding.rvPlanets.adapter = adapter
-        binding.rvPlanets.layoutManager = LinearLayoutManager(requireContext())
 
-        planetViewModel.planetInfos.observe(viewLifecycleOwner) { planetInfos ->
-            adapter.setPlanets(planetInfos)
-        }
-        planetViewModel.getAllPlanetInfos()
+        Handler().postDelayed({
+            val adapter = PlanetAdapter()
+            binding.rvPlanets.adapter = adapter
+            binding.rvPlanets.layoutManager = LinearLayoutManager(requireContext())
+
+            planetViewModel.planetInfos.observe(viewLifecycleOwner) { planetInfos ->
+                adapter.setPlanets(planetInfos)
+            }
+            planetViewModel.getAllPlanetInfos()
+            binding.rvPlanets.visibility = View.VISIBLE
+            binding.shimmerFrameLayout.visibility = View.GONE
+            binding.shimmerFrameLayout.stopShimmer()
+            binding.shimmerFrameLayout.visibility = View.GONE
+        },2000)
+
+
     }
     override fun onDestroyView() {
         super.onDestroyView()

@@ -3,7 +3,7 @@
 
     <style name="CostumChip" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="chipCornerRadius">8dp</item>
-        <item name="chipBackgroundColor">@color/black_gray</item>
+        <item name="chipBackgroundColor">@color/splash_color</item>
     </style>
 
     <style name="CostumRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">

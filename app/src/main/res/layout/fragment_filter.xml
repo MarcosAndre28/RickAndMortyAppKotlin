@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_status"
-            tools:textColor="@color/white"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -127,9 +127,9 @@
         android:layout_gravity="center"
         android:layout_marginBottom="16dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/bg_button"
+        android:background="@drawable/bg_button_filter"
         android:text="@string/title_btn_apply"
-        android:textColor="@color/white"
+        android:textColor="@color/splash_color"
         app:backgroundTint="@null" />
 
 </LinearLayout>

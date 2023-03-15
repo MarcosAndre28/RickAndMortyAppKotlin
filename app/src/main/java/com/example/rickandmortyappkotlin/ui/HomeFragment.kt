@@ -3,6 +3,8 @@ package com.example.rickandmortyappkotlin.ui
 import FilterDialogFragment
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.ColorStateList
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.text.Layout
@@ -11,6 +13,7 @@ import android.text.SpannableString
 import android.text.style.AlignmentSpan
 import android.view.*
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -61,6 +64,7 @@ class HomeFragment : Fragment() {
         navigationEpisodes.isVisible = false
 
         val searchItem = menu.findItem(R.id.search)
+        searchItem.setIcon(R.drawable.ic_search)
         val searchView = searchItem.actionView as SearchView
         searchView.setOnSearchClickListener {
             menu.findItem(R.id.filter).isVisible = false
@@ -202,15 +206,9 @@ class HomeFragment : Fragment() {
         }, 2000)
 
         binding.txtReset.setOnClickListener {
-            binding.shimmerFrameLayout.startShimmer()
-            binding.shimmerFrameLayout.visibility = View.VISIBLE
-            binding.rvMainCharacters.visibility = View.GONE
-            Handler().postDelayed({
                 characterViewModel.getCharacters(1)
-                characterViewModel.filterValue.value = arrayOf(0, 0)
-                binding.shimmerFrameLayout.stopShimmer()
                 binding.shimmerFrameLayout.visibility = View.GONE
-            },1000)
+
         }
     }
 

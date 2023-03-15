@@ -73,4 +73,6 @@
     <string name="alive">Alive</string>
     <string name="type">Type</string>
     <string name="dimension">Dimension</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
 </resources>

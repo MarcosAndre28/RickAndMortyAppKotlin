@@ -2,6 +2,7 @@ package com.example.rickandmortyappkotlin.ui
 
 import EpisodesAdapter
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +27,7 @@ class EpisodesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentEpisodesBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -36,29 +37,38 @@ class EpisodesFragment : Fragment() {
         initView()
     }
     private fun initView() {
-        binding.rvEp.apply {
-            layoutManager = ExpandableLayoutManager(context)
-            adapter = episodesAdapter
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    val layoutManager = recyclerView.layoutManager as ExpandableLayoutManager
-                    val visibleItemCount = layoutManager.childCount
-                    val totalItemCount = layoutManager.itemCount
-                    val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
-                        currentPage++
-                        episodeViewModel.getEpisodesBySeason(currentSeason, currentPage)
+
+            binding.rvEp.apply {
+                layoutManager = ExpandableLayoutManager(context)
+                adapter = episodesAdapter
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        val layoutManager = recyclerView.layoutManager as ExpandableLayoutManager
+                        val visibleItemCount = layoutManager.childCount
+                        val totalItemCount = layoutManager.itemCount
+                        val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+                        if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
+                            currentPage++
+                            episodeViewModel.getEpisodesBySeason(currentSeason, currentPage)
+                        }
                     }
-                }
-            })
-        }
-        episodeViewModel.getEpisodesBySeason(currentSeason, currentPage)
-        episodeViewModel.getEpisodesList().observe(viewLifecycleOwner) { episodes ->
-            binding.rvEp.post {
-                episodesAdapter.setEpisodes(episodes)
+                })
             }
-        }
+        Handler().postDelayed({
+            binding.rvEp.visibility = View.VISIBLE
+            binding.shimmerFrameLayout.stopShimmer()
+
+            episodeViewModel.getEpisodesBySeason(currentSeason, currentPage)
+        },3000)
+            episodeViewModel.getEpisodesList().observe(viewLifecycleOwner) { episodes ->
+                binding.rvEp.post {
+                    episodesAdapter.setEpisodes(episodes)
+                    binding.shimmerFrameLayout.visibility = View.GONE
+                }
+            }
+
+
     }
 
     override fun onDestroyView() {
