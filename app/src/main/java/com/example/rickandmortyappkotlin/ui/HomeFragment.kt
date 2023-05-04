@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.onNavDestinationSelected
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -55,13 +56,13 @@ class HomeFragment : Fragment() {
         inflater.inflate(R.menu.toolbar_menu, menu)
 
         val navMenu = menu.findItem(R.id.navigation_home)
-        navMenu.isVisible = false
+        navMenu?.isVisible = false
 
         val navigationLocation = menu.findItem(R.id.navigation_location)
-        navigationLocation.isVisible = false
+        navigationLocation?.isVisible = false
 
         val navigationEpisodes = menu.findItem(R.id.navigation_episodes)
-        navigationEpisodes.isVisible = false
+        navigationEpisodes?.isVisible = false
 
         val searchItem = menu.findItem(R.id.search)
         searchItem.setIcon(R.drawable.ic_search)
@@ -122,7 +123,7 @@ class HomeFragment : Fragment() {
                 return true
             }
         }
-        return super.onOptionsItemSelected(item)
+        return item.onNavDestinationSelected(findNavController()) || super.onOptionsItemSelected(item)
     }
 
     override fun onCreateView(
@@ -208,7 +209,6 @@ class HomeFragment : Fragment() {
         binding.txtReset.setOnClickListener {
                 characterViewModel.getCharacters(1)
                 binding.shimmerFrameLayout.visibility = View.GONE
-
         }
     }
 

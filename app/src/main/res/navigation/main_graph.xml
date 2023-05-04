@@ -72,15 +72,23 @@
             app:destination="@id/detailFragment" />
     </fragment>
     <fragment
-        android:id="@+id/navigation_location"
-        android:name="com.example.rickandmortyappkotlin.ui.LocationFragment"
-        android:label="fragment_location"
-        tools:layout="@layout/fragment_location" />
+    android:id="@+id/navigation_location"
+    android:name="com.example.rickandmortyappkotlin.ui.LocationFragment"
+    android:label="fragment_location"
+    tools:layout="@layout/fragment_location" >
+    <action
+        android:id="@+id/action_navigation_location_to_navigation_home"
+        app:destination="@id/navigation_home" />
+</fragment>
     <fragment
         android:id="@+id/navigation_episodes"
         android:name="com.example.rickandmortyappkotlin.ui.EpisodesFragment"
         android:label="fragment_episodes"
-        tools:layout="@layout/fragment_episodes" />
+        tools:layout="@layout/fragment_episodes" >
+        <action
+            android:id="@+id/action_navigation_episodes_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
     <fragment
         android:id="@+id/filterFragment"
         android:name="com.example.rickandmortyappkotlin.ui.FilterFragment"

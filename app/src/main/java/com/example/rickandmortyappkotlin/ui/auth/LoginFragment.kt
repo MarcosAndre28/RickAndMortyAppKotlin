@@ -22,6 +22,7 @@ import com.example.rickandmortyappkotlin.databinding.FragmentLoginBinding
 import com.example.rickandmortyappkotlin.databinding.FragmentSpashBinding
 import com.example.rickandmortyappkotlin.ui.MainActivity
 import com.example.rickandmortyappkotlin.utils.LoginState
+import com.example.rickandmortyappkotlin.utils.showBottomSheet
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment() {
@@ -113,7 +114,17 @@ class LoginFragment : Fragment() {
             val closeKeyboard = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             closeKeyboard.hideSoftInputFromWindow(binding.root.windowToken, 0)
 
-            loginViewModel.login(email, password)
+            if (email.isNotEmpty()){
+                if (password.isNotEmpty()){
+                    loginViewModel.login(email, password)
+                }
+                else {
+                    showBottomSheet(message = getString(R.string.password_empty))
+                }
+            }
+            else {
+                showBottomSheet(message = getString(R.string.email_empty))
+            }
 
             if (binding.checkBox.isChecked) {
                 val sharedPreferences = requireActivity().getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE)
