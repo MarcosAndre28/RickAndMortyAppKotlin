@@ -1,7 +1,7 @@
 
 # Rick and Morty App
 
-O aplicativo Rick and Morty foi desenvolvido em Kotlin, utilizando o padrão arquitetônico MVVM (Model-View-ViewModel), Kotlin Extensions e várias bibliotecas populares, como Navigation, Retrofit, Picasso, Coroutines, LifeCycle, Timber, Firebase e Shimmer. Este aplicativo fornece uma interface atraente e fácil de usar para os fãs de Rick e Morty explorarem informações sobre personagens, locais e episódios do show.
+O aplicativo Rick and Morty foi desenvolvido em Kotlin, utilizando o padrão de arquitetura MVVM (Model-View-ViewModel), Kotlin Extensions e várias bibliotecas populares, como Navigation, Retrofit, Picasso, Coroutines, LifeCycle, Timber, Firebase e Shimmer. Este aplicativo fornece uma interface atraente e fácil de usar para os fãs de Rick e Morty explorarem informações sobre personagens, locais e episódios do show.
 
 ## Características
 
@@ -15,7 +15,7 @@ O aplicativo Rick and Morty foi desenvolvido em Kotlin, utilizando o padrão arq
 
 ## Arquitetura e Bibliotecas
 
-- **MVVM (Model-View-ViewModel)**: O aplicativo segue o padrão arquitetônico MVVM, que promove a separação de responsabilidades e facilita a manutenção e testes.
+- **MVVM (Model-View-ViewModel)**: O aplicativo segue o padrão de arquitetura MVVM, que promove a separação de responsabilidades e facilita a manutenção e testes.
 - **Kotlin Extensions**: Utilizado para tornar o código mais conciso e melhorar a produtividade, simplificando o acesso a componentes e propriedades do Android.
 - **Navigation**: Usado para simplificar a navegação entre as diferentes telas do aplicativo.
 - **SDP** (Scalable DP): Ajuda a manter uma aparência consistente em diferentes dispositivos e densidades de tela.
